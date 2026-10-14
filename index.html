@@ -1,0 +1,843 @@
+<title>GoodTrip Settings Codes</title>
+<meta name="description" content="Read, share and compare GoodTrip AIO settings codes and save files.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* Layout: Isaac's main menu. A pale backdrop with faint pencil doodles, and
+   every panel one of the menu's paper pages (the game's own frame from the
+   Dead Sea Scrolls menu art, 2x: ragged ink edge, a grey shadow to the
+   bottom right) with doodles in its corners. Headings, tabs and buttons in
+   the menu's hand-lettered capitals, the reading text in a plain face. The
+   title with a corner of the mod's map, the two code slots side by side
+   (stacked on phones), where saves live, then the sheet of settings behind
+   the mod's tabs. One look in either theme, as in the game. */
+@font-face { font-family: "Isaac Menu"; src: url("fonts/isaac-menu.woff") format("woff"); font-display: swap; }
+:root {
+  --backdrop: #ece6da;     /* the menu's backdrop */
+  --paper: #fbf8f1;        /* a page */
+  --paper-dim: #ece5d6;
+  --ink: #2b2520;          /* the drawn outlines */
+  --pencil: #7a7065;       /* doodles and quiet text */
+  --soul: #2f5fb0;         /* slot A: a soul heart */
+  --red: #b0261f;          /* slot B: a red heart */
+  --gold: #f2d26a;         /* a changed value, the button you want */
+  --ok: #2f6b37;
+  --font-menu: "Isaac Menu", "Andika", "Trebuchet MS", sans-serif;
+  --font-body: "Andika", "Trebuchet MS", sans-serif;
+  --font-code: "Courier Prime", "Courier New", ui-monospace, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--backdrop); }
+body {
+  color: var(--ink); font: 400 17px/1.5 var(--font-body);
+  background: url("img/backdrop.png") 0 0 / 720px 720px repeat var(--backdrop);
+  image-rendering: pixelated; min-height: 100%;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 64px; display: grid; gap: 22px; }
+
+/* a menu page: the game's frame, 9-sliced at 2x */
+.sheet, .slot {
+  position: relative; min-width: 0;
+  border: 20px solid transparent; border-image: url("img/page.png") 10 fill / 20px / 0 stretch;
+  padding: 6px 10px 8px;
+}
+/* doodles in a page's corners, as on the menu's pages */
+.sheet::after, .slot::after { content: ""; position: absolute; pointer-events: none; background: no-repeat center / contain; }
+header.sheet::after { width: 48px; height: 58px; right: -6px; top: -10px; background-image: url("img/d-skull.png"); display: none; }
+.slot[data-slot="A"]::after { width: 34px; height: 40px; right: -14px; top: -18px; background-image: url("img/d-bunny.png"); }
+.slot[data-slot="B"]::after { width: 32px; height: 50px; right: -10px; bottom: -14px; background-image: url("img/d-knife.png"); }
+.where::after { width: 22px; height: 26px; right: -8px; bottom: -12px; background-image: url("img/d-ask.png"); }
+.board-sheet::after { width: 94px; height: 80px; left: -14px; bottom: -18px; background-image: url("img/d-splat.png"); }
+.board-sheet::before { content: ""; position: absolute; pointer-events: none; width: 42px; height: 50px; right: -14px; top: 190px;
+  background: url("img/d-poop.png") no-repeat center / contain; }
+
+header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; }
+h1 { font: 400 clamp(30px, 6vw, 50px)/1 var(--font-menu); margin: 4px 0 0; text-wrap: balance; letter-spacing: 0.02em; }
+h1 .dot { color: var(--red); }
+.lede { margin: 10px 0 0; max-width: 62ch; color: var(--ink); }
+/* a corner of the mod's map, drawn with its own room sprites and icons */
+.map { position: relative; width: calc(5 * 32px + 4px); height: calc(4 * 28px + 4px); flex: none; }
+.map i { position: absolute; width: 36px; height: 32px; background: url("img/minimap0.png") -108px -640px / 512px 1024px no-repeat; }
+.map i.cur { background-position: -108px -768px; }
+.map i.dim { background-position: -108px -896px; }
+.map i[data-icon]::after { content: ""; position: absolute; left: 2px; top: 0; width: 32px; height: 32px;
+  background: url("img/minimap_icons.png") var(--ix) var(--iy) / 256px 640px no-repeat; }
+.map .cursor { position: absolute; width: 32px; height: 58px; background: url("img/cursor_red.png") -32px 0 / 64px 64px no-repeat; }
+
+.slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; align-items: start; }
+.slot { display: grid; gap: 12px; }
+.slot[data-slot="A"] { --slot: var(--soul); --heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='11' viewBox='0 0 13 11' shape-rendering='crispEdges'%3E%3Cpath fill='%232b2520' d='M2 0h3v1h1v1h1V1h1V0h3v1h1v1h1v4h-1v1h-1v1h-1v1h-1v1H8v1H5v-1H4V9H3V8H2V7H1V6H0V2h1V1h1z'/%3E%3Cpath fill='%232f5fb0' d='M2 1h3v1h1v1h1V2h1V1h3v1h1v4h-1v1h-1v1H9v1H8v1H5V9H4V8H3V7H2V6H1V2h1z'/%3E%3Cpath fill='%23a9c8f0' d='M2 2h2v1H3v1H2z'/%3E%3C/svg%3E"); }
+.slot[data-slot="B"] { --slot: var(--red); --heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='11' viewBox='0 0 13 11' shape-rendering='crispEdges'%3E%3Cpath fill='%232b2520' d='M2 0h3v1h1v1h1V1h1V0h3v1h1v1h1v4h-1v1h-1v1h-1v1h-1v1H8v1H5v-1H4V9H3V8H2V7H1V6H0V2h1V1h1z'/%3E%3Cpath fill='%23b0261f' d='M2 1h3v1h1v1h1V2h1V1h3v1h1v4h-1v1h-1v1H9v1H8v1H5V9H4V8H3V7H2V6H1V2h1z'/%3E%3Cpath fill='%23f08a8a' d='M2 2h2v1H3v1H2z'/%3E%3C/svg%3E"); }
+.slot.drag { outline: 3px dashed var(--slot); outline-offset: -6px; }
+.slot-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.slot-head h2 { margin: 0; font: 400 28px/1 var(--font-menu); color: var(--slot); display: flex; align-items: center; gap: 10px; }
+.slot-head h2::before { content: ""; width: 26px; height: 22px; flex: none; background: no-repeat center / contain var(--heart); }
+.tag { font-size: 15px; color: var(--pencil); }
+
+label.field { display: grid; gap: 4px; font: 400 16px/1.2 var(--font-menu); color: var(--pencil); letter-spacing: .02em; }
+input[type="text"], .savebox textarea, td.val select, td.val input[type="number"] {
+  width: 100%; color: var(--ink); background: var(--paper); border: 2px solid var(--ink); border-radius: 2px;
+}
+input[type="text"] { font: 700 21px/1.2 var(--font-code); letter-spacing: 0.08em; padding: 7px 10px; text-transform: uppercase; }
+input[type="text"]::placeholder { color: rgba(43, 37, 32, .3); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+/* buttons: little menu pages; the one to press is a gold one */
+.row { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+button, .file {
+  font: 400 19px/1 var(--font-menu); letter-spacing: .02em; padding: 2px 6px 3px; cursor: pointer; color: var(--ink);
+  border: 14px solid transparent; border-image: url("img/note.png") 9 fill / 14px / 0 stretch; background: none; border-radius: 0;
+}
+button:hover, .file:hover { border-image-source: url("img/note-shade.png"); }
+button:active, .file:active { transform: translate(1px, 2px); }
+button.primary { border-image-source: url("img/note-gold.png"); }
+.file input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.file { position: relative; display: inline-flex; }
+.add-b { justify-self: start; font-size: 21px; }
+
+.status { font-size: 16px; min-height: 1.5em; margin: 0; color: var(--pencil); }
+.status.err { color: var(--red); }
+.status.ok { color: var(--ok); }
+.code-out { font: 700 24px/1.3 var(--font-code); letter-spacing: 0.1em; word-break: break-all; margin: 0; }
+.code-out, td.val.chg .v, td.val.chg .check { background: var(--gold); box-shadow: 0 0 0 3px var(--gold); border-radius: 1px; }
+.hint { font-size: 15px; color: var(--pencil); margin: 0; }
+.hint code, .where code { font: 700 15px var(--font-code); word-break: break-all; color: var(--ink); }
+.savebox { display: grid; gap: 6px; }
+.savebox textarea { height: 96px; font: 13px/1.4 var(--font-code); padding: 6px 8px; resize: vertical; }
+
+.where { display: grid; gap: 8px; }
+.where p { margin: 0; }
+.where strong { font: 400 20px/1 var(--font-menu); margin-right: 4px; letter-spacing: .02em; }
+
+.board-sheet { display: grid; gap: 12px; padding: 6px 8px 8px; }
+.search { display: grid; gap: 4px; }
+.search-label { font: 400 22px/1 var(--font-menu); letter-spacing: .02em; }
+.search-row { display: flex; gap: 8px; align-items: center; }
+.search input[type="search"] { flex: 1 1 auto; min-width: 0; font: 400 18px/1.3 var(--font-body); padding: 8px 12px 8px 38px; color: var(--ink);
+  background: var(--paper) url("img/d-arrow.png") 12px center / 14px 13px no-repeat; border: 2px solid var(--ink); border-radius: 2px; }
+.search input[type="search"]::-webkit-search-cancel-button { display: none; }
+.qclear { flex: none; font-size: 17px; }
+mark { background: var(--gold); color: inherit; padding: 0 1px; border-radius: 1px; }
+td .where-in { display: block; font: 400 14px/1.2 var(--font-menu); color: var(--pencil); letter-spacing: .02em; margin-bottom: 2px; }
+.controls { display: grid; gap: 10px; }
+/* the tabs: a menu's items, the chosen one pointed at and underlined */
+.tabs { display: flex; flex-wrap: wrap; gap: 2px 4px; align-items: center; padding: 0 2px 8px;
+  background: url("img/d-line.png") left bottom / 100% 8px no-repeat; }
+.tabs button {
+  border: 0; border-image: none; padding: 6px 8px 6px 22px; font: 400 19px/1 var(--font-menu); color: var(--pencil);
+  display: inline-flex; align-items: center; gap: 6px; position: relative;
+}
+.tabs button:hover { color: var(--ink); border-image: none; }
+.tabs button:active { transform: none; }
+.tabs button[aria-selected="true"] { color: var(--ink); }
+.tabs button[aria-selected="true"]::before { content: ""; position: absolute; left: 4px; top: 50%; width: 14px; height: 13px; margin-top: -7px;
+  background: url("img/d-arrow.png") center / contain no-repeat; }
+.badge { font: 700 13px/1 var(--font-code); background: var(--gold); color: var(--ink); padding: 2px 4px; border: 1.5px solid var(--ink); border-radius: 2px; }
+.controls .toggle { justify-self: end; }
+.toggle { display: inline-flex; gap: 8px; align-items: center; font-size: 16px; cursor: pointer; }
+input[type="checkbox"] { appearance: none; -webkit-appearance: none; width: 20px; height: 20px; margin: 0; flex: none; cursor: pointer;
+  background: var(--paper); border: 2px solid var(--ink); border-radius: 2px; }
+input[type="checkbox"]:checked { background: var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.4L13 4' fill='none' stroke='%232b2520' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 16px 16px no-repeat; }
+.summary { font-size: 16px; color: var(--pencil); margin: 0; }
+.board { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 16.5px; }
+th, td { text-align: left; padding: 7px 10px; vertical-align: top; border-bottom: 1px solid rgba(43, 37, 32, .14); }
+thead th { font: 400 17px/1.1 var(--font-menu); color: var(--pencil); border-bottom: 2px solid var(--ink); letter-spacing: .03em; }
+tr.page th { padding-top: 22px; border-bottom: 2px solid var(--ink); }
+tr.group th { padding-top: 12px; border-bottom: 1px solid var(--pencil); }
+tr.page th, tr.group th { padding-left: 2px; }
+.fold { all: unset; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; color: inherit; }
+tr.page .fold, tr.page > th:not(:has(.fold)) { font: 400 26px/1.1 var(--font-menu); color: var(--ink); }
+tr.group .fold { font: 400 20px/1.1 var(--font-menu); color: var(--pencil); }
+.fold:hover { color: var(--red); }
+.fold:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+/* the menu's arrow: down when open */
+.caret { display: inline-block; width: 13px; height: 12px; flex: none; font-size: 0; background: url("img/d-arrow.png") center / contain no-repeat; transform: rotate(90deg); }
+.fold[aria-expanded="false"] .caret { transform: none; }
+.fold .count { font: 400 15px/1 var(--font-body); color: var(--pencil); }
+td.val { white-space: nowrap; font-variant-numeric: tabular-nums; }
+td.val.edit { white-space: normal; }
+td.val select, td.val input[type="number"] { width: auto; font: 400 16px/1.2 var(--font-body); padding: 3px 6px; max-width: 100%; }
+td.val input[type="number"] { width: 6.5em; font-family: var(--font-code); }
+td.val.chg select, td.val.chg input[type="number"] { background-color: var(--gold); }
+.check { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; }
+td.val.a { color: var(--soul); }
+td.val.b { color: var(--red); }
+td .info { display: block; color: var(--pencil); font-size: 14.5px; line-height: 1.35; }
+.empty { padding: 24px; color: var(--pencil); margin: 0; font-size: 18px; }
+footer { font-size: 14px; color: var(--pencil); text-align: center; }
+@media (max-width: 640px) {
+  header { grid-template-columns: 1fr; }
+  .map { display: none; }
+}
+@media (max-width: 480px) {
+  .tabs button { font-size: 16px; padding: 5px 6px 5px 20px; }
+  .controls .toggle { justify-self: start; }
+  .sheet, .slot { border-width: 16px; border-image-width: 16px; }
+}
+</style>
+
+<div class="wrap">
+  <header class="sheet">
+    <div>
+      <h1>GoodTrip Settings Codes<span class="dot">.</span></h1>
+      <p class="lede">Every GoodTrip AIO setup fits in a short code: the mod shows yours on its Misc tab and writes it at the top of its save file. Paste a code or open a save to see the settings, change any of them right here, share a link, get a save file, or compare two setups.</p>
+    </div>
+    <div class="map" aria-hidden="true"><i class="dim" data-icon="IconSecretRoom" style="left:32px;top:0px;--ix:-32px;--iy:-0px"></i><i data-icon="IconShop" style="left:0px;top:28px;--ix:-0px;--iy:-0px"></i><i style="left:32px;top:28px"></i><i class="cur" style="left:64px;top:28px"></i><i data-icon="IconTreasureRoom" style="left:96px;top:28px;--ix:-128px;--iy:-0px"></i><i style="left:64px;top:56px"></i><i class="dim" data-icon="IconCurseRoom" style="left:64px;top:0px;--ix:-128px;--iy:-32px"></i><i style="left:96px;top:56px"></i><i class="dim" data-icon="IconBoss" style="left:128px;top:56px;--ix:-32px;--iy:-32px"></i><span class="cursor" style="left:120px;top:62px"></span></div>
+  </header>
+
+  <section class="slots" aria-label="Settings to read">
+    <div class="slot" data-slot="A" id="slotA"></div>
+    <div class="slot" data-slot="B" id="slotB" hidden></div>
+    <button class="add-b" id="addB" type="button">Compare with another code or save</button>
+  </section>
+
+  <section class="where sheet" aria-label="Where the save file is">
+    <p><strong>Where the save is:</strong> in the game's folder, <code>data/goodtrip_aio/save1.dat</code> (save2 and save3 for the other save slots). On Steam that is <code>Steam/steamapps/common/The Binding of Isaac Rebirth/data/goodtrip_aio/save1.dat</code>. Close the game before replacing it.</p>
+    <p><strong>In the game:</strong> open the console and type <code>gtimport</code> and the code; <code>gtcode</code> prints your own.</p>
+  </section>
+
+  <section class="sheet board-sheet" aria-label="Settings">
+    <div class="controls">
+      <div class="search" role="search">
+        <label for="q" class="search-label">Find a setting</label>
+        <div class="search-row">
+          <input type="search" id="q" autocomplete="off" spellcheck="false" placeholder="arrow keys, map size, hide in combat, secret rooms…" aria-describedby="qhint">
+          <button type="button" id="qclear" class="qclear" aria-label="Clear the search" hidden>Clear</button>
+        </div>
+        <p class="hint" id="qhint">Searches every tab: names, descriptions, choices. Press / to start typing, Esc to clear.</p>
+      </div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="Tabs"></div>
+      <label class="toggle"><input type="checkbox" id="onlyChanged" checked> <span id="onlyLabel">Only settings changed from the defaults</span></label>
+    </div>
+    <p class="summary" id="summary"></p>
+    <div class="board"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+  </section>
+
+  <footer>Generated from the mod's own settings list, so labels and defaults match the menus. Codes from a newer version show what this page knows and skip the rest. Pages, doodles and lettering: the Dead Sea Scrolls menu art the mod ships with.</footer>
+</div>
+
+<script src="settings-data.js"></script>
+<script src="codec.js"></script>
+<script>
+(function () {
+  "use strict";
+  const S = window.GT_SETTINGS, C = window.GTCodec;
+  // where share links point: this page when it is a real site, else the
+  // published copy (inside the artifact viewer the page cannot see its address)
+  const SHARE_BASE = "https://claude.ai/artifact/Aaw9azZ7VypztrUtbc5QG8";
+  const onSite = /^https?:$/.test(location.protocol) && !/claudeusercontent|claude\.ai|localhost:0/.test(location.host);
+  const shareBase = onSite ? location.origin + location.pathname : SHARE_BASE;
+
+  const slots = { A: null, B: null };
+  // the claude.ai viewer's download prompt; null elsewhere or until it answers
+  let downloads = null;
+  if (!onSite && window.claude && window.claude.use) {
+    window.claude.use("downloads").then((d) => {
+      downloads = d;
+      for (const id of ["A", "B"]) { const b = $("download" + id); if (b) b.hidden = !d; }
+    }).catch(() => {});
+  }
+  let page = "all";
+  const $ = (id) => document.getElementById(id);
+
+  // ---- values -------------------------------------------------------------
+  function value(slot, k) {
+    const o = S.options[k];
+    return slot && k in slot.values ? slot.values[k] : o.default;
+  }
+  function fmt(o, v) {
+    if (C.isNone(v)) return o.kind === "key" || o.kind === "pad" ? "None" : "–";
+    if (o.kind === "bool") return v ? "On" : "Off";
+    if (o.kind === "choice") {
+      const i = o.values ? o.values.indexOf(v) : v - 1;
+      return (o.choices && o.choices[i]) || String(v);
+    }
+    if (o.kind === "key") return "Key " + v;
+    if (o.kind === "pad") return "Button " + v;
+    return String(v);
+  }
+  // a Both row (Maps and Icons tabs): one value when both maps agree
+  function rowValue(slot, key) {
+    const o = S.options[key];
+    if (o.both) {
+      const [ck, wk] = o.both;
+      const cv = value(slot, ck), wv = value(slot, wk);
+      const co = S.options[ck];
+      const text = C.same(cv, wv) ? fmt(co, cv) : `Corner ${fmt(co, cv)} · Widget ${fmt(S.options[wk], wv)}`;
+      const changed = !C.same(cv, co.default) || !C.same(wv, S.options[wk].default);
+      return { text, changed, raw: JSON.stringify([cv, wv]) };
+    }
+    const v = value(slot, key);
+    return { text: fmt(o, v), changed: !C.same(v, o.default), raw: JSON.stringify(v ?? null) };
+  }
+
+  // ---- slots ----------------------------------------------------------------
+  function slotHTML(id) {
+    const other = id === "A" ? "Your settings" : "Compare with";
+    return `
+      <div class="slot-head"><h2>${id} · ${other}</h2><span class="tag" id="tag${id}"></span></div>
+      <label class="field" for="code${id}">Settings code
+        <input type="text" id="code${id}" autocomplete="off" spellcheck="false" placeholder="1G51 E0CR …">
+      </label>
+      <div class="row">
+        <label class="file">Open a save file<input type="file" id="file${id}" accept=".dat,.json,.txt,application/json,text/plain"></label>
+        ${id === "B" ? '<button type="button" id="removeB">Stop comparing</button>' : '<button type="button" id="fresh">Start from defaults</button>'}
+      </div>
+      <p class="status" id="status${id}" role="status"></p>
+      <div id="out${id}" hidden>
+        <p class="code-out" id="codeOut${id}"></p>
+        <div class="row">
+          <button type="button" class="primary" id="copyCode${id}">Copy code</button>
+          <button type="button" id="copyLink${id}">Copy share link</button>
+          <button type="button" id="download${id}">Download save file</button>
+          <button type="button" id="showSave${id}">Copy save text</button>
+        </div>
+        <div class="savebox" id="saveBox${id}" hidden>
+          <p class="hint">The whole save file. Paste it over the contents of <code>save1.dat</code>.</p>
+          <textarea id="saveText${id}" readonly aria-label="Save file text"></textarea>
+        </div>
+      </div>`;
+  }
+
+  function setStatus(id, text, kind) {
+    const el = $("status" + id);
+    el.textContent = text;
+    el.className = "status" + (kind ? " " + kind : "");
+  }
+
+  function load(id, data, source) {
+    const code = C.encode(S, data.values, data.vanilla) || "1";
+    slots[id] = { values: data.values, vanilla: data.vanilla, code, source };
+    $("out" + id).hidden = false;
+    $("codeOut" + id).textContent = C.spaced(code);
+    $("tag" + id).textContent = source;
+    $("saveBox" + id).hidden = true;
+    render();
+    updateHash();
+  }
+
+  function readCode(id, text, quiet) {
+    if (!text.replace(/[\s-]/g, "")) { setStatus(id, ""); return; }
+    try {
+      const d = C.decode(S, text);
+      load(id, d, "From a code");
+      const n = d.known;
+      let msg = n === 0 ? "All settings at their defaults." : `${n} setting${n === 1 ? "" : "s"} changed from the defaults.`;
+      if (d.unknown) msg += ` ${d.unknown} from a newer version of the mod skipped.`;
+      setStatus(id, msg, "ok");
+    } catch (e) {
+      if (!quiet) setStatus(id, e.message, "err");
+    }
+  }
+
+  function readFile(id, file) {
+    const r = new FileReader();
+    r.onload = () => {
+      try {
+        const d = C.fromSave(S, String(r.result));
+        load(id, d, "From " + file.name);
+        $("code" + id).value = C.spaced(slots[id].code);
+        setStatus(id, "Save file read." + (d.code && d.code !== slots[id].code ? " Its stored code was older; the code above is its settings now." : ""), "ok");
+      } catch (e) { setStatus(id, e.message, "err"); }
+    };
+    r.onerror = () => setStatus(id, "The file could not be read.", "err");
+    r.readAsText(file);
+  }
+
+  async function copy(id, text, what) {
+    try { await navigator.clipboard.writeText(text); setStatus(id, what + " copied.", "ok"); }
+    catch (e) {
+      setStatus(id, "Copying was blocked here; select the text and copy it yourself.", "err");
+      return false;
+    }
+    return true;
+  }
+
+  function shareLink(id) {
+    const a = slots.A, b = slots.B;
+    if (id === "B" && b) return shareBase + "#" + b.code;
+    if (a && b) return shareBase + "#" + a.code + "~" + b.code;
+    return shareBase + "#" + (a ? a.code : "1");
+  }
+
+  function wire(id) {
+    const el = $("slot" + id);
+    el.innerHTML = slotHTML(id);
+    const input = $("code" + id);
+    input.addEventListener("input", () => readCode(id, input.value, true));
+    input.addEventListener("change", () => readCode(id, input.value, false));
+    $("file" + id).addEventListener("change", (e) => { if (e.target.files[0]) readFile(id, e.target.files[0]); });
+    el.addEventListener("dragover", (e) => { e.preventDefault(); el.classList.add("drag"); });
+    el.addEventListener("dragleave", () => el.classList.remove("drag"));
+    el.addEventListener("drop", (e) => {
+      e.preventDefault(); el.classList.remove("drag");
+      if (e.dataTransfer.files[0]) readFile(id, e.dataTransfer.files[0]);
+    });
+    $("copyCode" + id).addEventListener("click", () => slots[id] && copy(id, slots[id].code, "Code"));
+    $("copyLink" + id).addEventListener("click", () => slots[id] && copy(id, shareLink(id), "Link"));
+    $("showSave" + id).addEventListener("click", async () => {
+      if (!slots[id]) return;
+      const text = C.toSave(S, slots[id].values, slots[id].vanilla);
+      $("saveText" + id).value = text;
+      $("saveBox" + id).hidden = false;
+      if (!(await copy(id, text, "Save file text"))) $("saveText" + id).select();
+    });
+    $("download" + id).hidden = !onSite && !downloads;
+    $("download" + id).addEventListener("click", async () => {
+      if (!slots[id]) return;
+      const text = C.toSave(S, slots[id].values, slots[id].vanilla);
+      if (onSite) {
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([text], { type: "application/json" }));
+        a.download = "save1.dat";
+        document.body.appendChild(a); a.click(); a.remove();
+        setStatus(id, "Downloaded save1.dat.", "ok");
+        return;
+      }
+      // the claude.ai viewer saves through its own prompt, and only allows
+      // a few file types, so the save comes as .json to rename
+      try {
+        await downloads.save({ filename: "save1.json", data: text });
+        setStatus(id, "Saved save1.json. Rename it to save1.dat before putting it in the game's folder.", "ok");
+      } catch (e) {
+        if (e && e.code === "declined") setStatus(id, "Download cancelled.");
+        else if (e && e.code === "rate_limited") setStatus(id, "A download is already waiting for an answer.");
+        else { setStatus(id, "Downloads are not available here. Use Copy save text instead.", "err"); $("download" + id).hidden = true; }
+      }
+    });
+    if (id === "A") $("fresh").addEventListener("click", () => {
+      load("A", { values: {}, vanilla: null }, "Defaults");
+      $("codeA").value = "";
+      $("onlyChanged").checked = false;
+      page = S.pages[0].id;
+      render();
+      setStatus("A", "Every setting at its default. Change any of them below; the code and save file follow.", "ok");
+    });
+    if (id === "B") $("removeB").addEventListener("click", () => {
+      slots.B = null; $("slotB").hidden = true; $("addB").hidden = false; render(); updateHash();
+    });
+  }
+
+  // ---- the settings board ---------------------------------------------------
+  // a page's rows. In its own tab: as the game lays it out, copies included
+  // (Main's shortcuts, the Maps and Icons tabs' both-maps rows). In All: each
+  // setting once, on its own tab.
+  function rowsOf(p, inTab) {
+    const out = [];
+    for (const r of p.rows) {
+      if (r[0] === "#") out.push({ header: r.slice(1) });
+      else if (r[0] === "=" || r[0] === "+") {
+        if (!inTab) continue;
+        const key = r.slice(1);
+        if (S.options[key]) out.push({ key });
+      } else if (S.options[r]) out.push({ key: r });
+    }
+    return out;
+  }
+
+  // folded tab sections and subcategories, remembered in this browser
+  let folded = new Set();
+  try { folded = new Set(JSON.parse(localStorage.getItem("gt-folded") || "[]")); } catch (e) { /* none kept */ }
+  function toggleFold(id) {
+    if (folded.has(id)) folded.delete(id); else folded.add(id);
+    try { localStorage.setItem("gt-folded", JSON.stringify([...folded])); } catch (e) { /* not kept */ }
+    render();
+  }
+  function foldRow(cls, id, name, n, scope) {
+    const open = !folded.has(id);
+    return `<tr class="${cls}"><th colspan="3" scope="${scope}"><button type="button" class="fold" data-fold="${esc(id)}" aria-expanded="${open}"><span class="caret" aria-hidden="true"></span>${esc(name)}<span class="count">${n}</span></button></th></tr>`;
+  }
+
+  // one page's body: its rows grouped under their subcategories
+  function pageBody(p, inTab, a, b, compare, only) {
+    let body = "", n = 0, changed = 0;
+    let group = null; // { name, rows: [] }
+    const groups = [];
+    for (const r of rowsOf(p, inTab)) {
+      if (r.header !== undefined) { group = { name: r.header, rows: [] }; groups.push(group); continue; }
+      if (!group) { group = { name: null, rows: [] }; groups.push(group); }
+      const o = S.options[r.key];
+      const va = rowValue(a, r.key);
+      let cells, hit;
+      if (compare) {
+        const vb = rowValue(b, r.key);
+        hit = va.raw !== vb.raw;
+        cells = `<td class="val a${hit ? " chg" : ""}"><span class="v">${esc(va.text)}</span></td><td class="val b${hit ? " chg" : ""}"><span class="v">${esc(vb.text)}</span></td>`;
+      } else {
+        hit = va.changed;
+        cells = `<td class="val edit${hit ? " chg" : ""}">${control(p.id, r.key)}</td><td class="val">${esc(rowValue(null, r.key).text)}</td>`;
+      }
+      if (hit) changed++;
+      if (only && !hit) continue;
+      group.rows.push(`<tr><td>${esc(o.label || r.key)}<span class="info">${esc(o.info || "")}</span></td>${cells}</tr>`);
+    }
+    for (const g of groups) {
+      if (!g.rows.length) continue;
+      n += g.rows.length;
+      if (g.name === null) { body += g.rows.join(""); continue; }
+      const id = p.id + "/" + g.name;
+      body += foldRow("group", id, g.name, g.rows.length, "rowgroup");
+      if (!folded.has(id)) body += g.rows.join("");
+    }
+    return { body, n, changed };
+  }
+
+  // ---- search ---------------------------------------------------------------
+  // every setting once, with where it lives (tab, section) and everything a
+  // player might type to find it
+  const SYNONYMS = {
+    tp: ["teleport", "travel", "trip"], teleport: ["travel", "trip", "go"], warp: ["teleport", "trip"], travel: ["teleport", "trip"],
+    minimap: ["map", "corner"], map: ["minimap"], window: ["widget"], popup: ["widget"],
+    arrow: ["keyboard", "cursor", "shooting"], arrows: ["keyboard", "cursor", "shooting"], keyboard: ["key", "keys"],
+    mouse: ["click", "pointer", "hover"], click: ["mouse"], pointer: ["cursor", "mouse"],
+    controller: ["pad", "button", "stick"], gamepad: ["pad", "button", "stick"], joystick: ["stick", "pad"], pad: ["controller", "button"],
+    tab: ["map key", "hold", "tap"], hotkey: ["shortcut", "key"], hotkeys: ["shortcut", "keys"], shortcut: ["hotkey", "key"], bind: ["key", "button"],
+    size: ["scale", "zoom", "big"], bigger: ["scale", "size", "zoom"], smaller: ["scale", "size", "zoom"], zoom: ["scale", "size"], scale: ["size", "zoom"],
+    position: ["anchor", "offset", "corner", "place"], move: ["position", "offset", "anchor", "drag"], place: ["position", "anchor"],
+    hide: ["hidden", "off", "show"], disable: ["off", "enable"], turn: ["enable", "off"], show: ["display", "hide"],
+    item: ["pickup", "items"], items: ["pickups", "pickup"], loot: ["pickup", "pickups"], drops: ["pickup", "pickups"], coins: ["coin", "penny"],
+    secret: ["hidden", "hints", "delver"], delver: ["secret", "hints"], hint: ["hints", "secret"],
+    restart: ["reset", "restart"], reset: ["default", "restart"], defaults: ["reset", "default"],
+    fight: ["combat"], battle: ["combat"], enemies: ["combat"], boss: ["combat", "boss"],
+    lag: ["performance", "low"], fps: ["performance", "low"], slow: ["performance", "low"], laptop: ["performance"], steamdeck: ["performance"],
+    colour: ["color"], see: ["opacity", "transparent"], transparent: ["opacity"], invisible: ["opacity", "hidden"],
+    curse: ["curse"], lock: ["locked", "unlock", "key"], unlock: ["locked", "auto"], bomb: ["bombs"], language: ["chinese"],
+    eid: ["map key", "tab"], conflict: ["map key", "clash"], lazy: ["secret", "hints"], rules: ["allow", "rooms", "where"],
+    stop: ["off", "disable"], stops: ["off", "disable"], prevent: ["off", "block"], block: ["off", "refuse"], only: ["off"],
+    number: ["numbers", "distance"], distance: ["distances", "numbers"], numbers: ["distance", "room"], animation: ["effect", "transition", "fade", "flash"],
+  };
+  //how players put it -> the setting they mean (its name), ranked first
+  const ASKED = [
+    ["arrow key", "Keyboard Cursor"], ["arrows", "Keyboard Cursor"], ["map pointer", "Keyboard Cursor"], ["map cursor", "Keyboard Cursor"],
+    ["shooting key", "Keyboard Cursor"], ["mouse only", "Keyboard Cursor"], ["keyboard only", "Click To Teleport"],
+    ["click", "Click To Teleport"], ["lazy delver", "Secret Hints"], ["secret room", "Secret Hints"], ["eid", "Map Key"],
+    ["tab key", "Map Key"], ["map size", "Corner Map Size"], ["bigger map", "Corner Map Size"], ["smaller map", "Corner Map Size"],
+    ["minimap size", "Corner Map Size"], ["map position", "Map Position"], ["move the map", "Map Position"],
+    ["style keeps changing", "Tap To Switch"], ["map changes", "Tap To Switch"], ["switching style", "Tap To Switch"],
+    ["lag", "Low Perf. Mode"], ["fps", "Low Perf. Mode"], ["performance", "Low Perf. Mode"], ["restart", "TAB+R Restart"],
+    ["turn off", "Enable GoodTrip"], ["uninstall", "Enable GoodTrip"], ["locked door", "Auto-Unlock"], ["unlock", "Auto-Unlock"],
+    ["curse room", "Block Curse Rooms"], ["teleport rules", "Uncleared Neighbors"], ["anywhere", "Any Room"],
+  ];
+  //words that carry no meaning in a question ("how do I stop ...")
+  const STOP = new Set(["how", "do", "i", "the", "a", "an", "to", "can", "my", "of", "is", "it", "with", "while", "when",
+    "use", "using", "want", "dont", "don", "t", "for", "and", "or", "me", "you", "there", "way", "setting", "settings", "option", "options",
+    "turn", "off", "on", "stop", "disable", "enable", "make", "get", "change", "set", "moving", "move", "only"]);
+  const norm = (t) => String(t || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const words = (t) => norm(t).split(/[^a-z0-9\u4e00-\u9fff]+/).filter(Boolean);
+  const splitKey = (k) => k.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2");
+  let index = null;
+  function buildIndex() {
+    index = [];
+    for (const p of S.pages) {
+      let section = "";
+      for (const r of rowsOf(p, false)) {
+        if (r.header !== undefined) { section = r.header; continue; }
+        const o = S.options[r.key];
+        const base = o.both ? S.options[o.both[0]] : o;
+        const label = o.label || r.key;
+        const fields = [
+          [label, 6], [splitKey(r.key), 3], [o.info, 2], [(base.choices || []).join(" "), 2],
+          [section, 2], [p.name + " " + (p.info || ""), 1], [(o.zh || "") + " " + (o.zh_info || ""), 2],
+        ];
+        index.push({ key: r.key, page: p, section, label, fields: fields.map(([t, w]) => ({ words: words(t), text: norm(t), w })) });
+      }
+    }
+  }
+  // edit distance within a limit (small words only), for typos
+  function near(a, b, limit) {
+    if (Math.abs(a.length - b.length) > limit) return false;
+    let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+    for (let i = 1; i <= a.length; i++) {
+      const cur = [i];
+      let best = i;
+      for (let j = 1; j <= b.length; j++) {
+        cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+        if (cur[j] < best) best = cur[j];
+      }
+      if (best > limit) return false;
+      prev = cur;
+    }
+    return prev[b.length] <= limit;
+  }
+  // how well one typed word matches a field: whole word 3, word start 2,
+  // inside a word 1, a typo 1 (longer words), 0 none
+  function wordScore(q, f) {
+    let best = 0;
+    for (const w of f.words) {
+      if (w === q) return 3;
+      if (w.startsWith(q)) best = Math.max(best, 2);
+      else if (q.length >= 3 && w.includes(q)) best = Math.max(best, 1);
+      else if (q.length >= 4 && w.length >= 4 && near(q, w, q.length >= 7 ? 2 : 1)) best = Math.max(best, 1);
+    }
+    if (!best && q.length >= 2 && f.text.includes(q)) best = 1; //Chinese, or across words
+    return best;
+  }
+  function search(query) {
+    if (!index) buildIndex();
+    let qs = words(query);
+    const meant = qs.filter((q) => !STOP.has(q));
+    if (meant.length) qs = meant;
+    if (!qs.length) return [];
+    const phrase = norm(query).trim();
+    //every word should match; with three or more, one may miss (a typo too
+    //far off, a word the setting does not use), and more matched ranks first
+    const need = qs.length <= 2 ? qs.length : qs.length - 1;
+    const out = [];
+    for (const it of index) {
+      let total = 0, matched = 0;
+      for (const q of qs) {
+        let best = 0;
+        for (const f of it.fields) best = Math.max(best, wordScore(q, f) * f.w);
+        //what players call it: a synonym counts a little less than the word
+        //itself; a synonym of two words must stand together
+        for (const alt of SYNONYMS[q] || []) {
+          if (alt.includes(" ")) {
+            for (const f of it.fields) if (f.text.includes(alt)) best = Math.max(best, 3 * f.w * 0.8);
+          } else for (const f of it.fields) best = Math.max(best, wordScore(alt, f) * f.w * 0.8);
+        }
+        if (best) { matched++; total += best; }
+      }
+      const asked = ASKED.some(([said, meant]) => phrase.includes(said) && it.label === meant);
+      if (matched < need && !asked) continue;
+      if (phrase.includes(" ")) {
+        if (it.fields[0].text.includes(phrase)) total += 25;
+        else if (it.fields[2].text.includes(phrase)) total += 10;
+      }
+      if (it.fields[0].text === phrase) total += 30;
+      for (const [said, meant] of ASKED) if (phrase.includes(said) && it.label === meant) total += 400;
+      out.push({ it, score: total + matched * 100 });
+    }
+    out.sort((x, y) => y.score - x.score || x.it.label.localeCompare(y.it.label));
+    //one row per setting: a both-maps row stands for the corner map's and the
+    //widget's own copies, unless the search names one of the maps
+    const perMap = qs.some((q) => /^(corner|widget|window|c|w)$/.test(q));
+    if (!perMap) {
+      const covered = new Set();
+      for (const { it } of out) { const o = S.options[it.key]; if (o.both) for (const k of o.both) covered.add(k); }
+      //and a name once (the maps' own copies share their names)
+      const named = new Set();
+      return out.filter(({ it }) => {
+        if (covered.has(it.key) || named.has(it.label)) return false;
+        named.add(it.label); return true;
+      });
+    }
+    return out;
+  }
+  // the typed words marked in a text (escaped first)
+  function marked(text, query) {
+    let html = esc(text);
+    const qs = words(query).filter((q) => q.length >= 2).sort((x, y) => y.length - x.length);
+    if (!qs.length) return html;
+    const re = new RegExp("(" + qs.map((q) => q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")", "gi");
+    return html.replace(/(<[^>]*>)|([^<]+)/g, (m, tag, txt) => tag || txt.replace(re, "<mark>$1</mark>"));
+  }
+  function searchBody(query, a, b, compare) {
+    const hits = search(query);
+    let body = "";
+    for (const { it } of hits) {
+      const o = S.options[it.key];
+      const va = rowValue(a, it.key);
+      let cells;
+      if (compare) {
+        const vb = rowValue(b, it.key), hit = va.raw !== vb.raw;
+        cells = `<td class="val a${hit ? " chg" : ""}"><span class="v">${esc(va.text)}</span></td><td class="val b${hit ? " chg" : ""}"><span class="v">${esc(vb.text)}</span></td>`;
+      } else {
+        cells = `<td class="val edit${va.changed ? " chg" : ""}">${control(it.page.id, it.key)}</td><td class="val">${esc(rowValue(null, it.key).text)}</td>`;
+      }
+      const where = it.page.name + (it.section ? " › " + it.section : "");
+      body += `<tr><td><span class="where-in">${esc(where)}</span>${marked(it.label, query)}<span class="info">${marked(o.info || "", query)}</span></td>${cells}</tr>`;
+    }
+    return { body, n: hits.length };
+  }
+
+  function render() {
+    const a = slots.A, b = slots.B;
+    const compare = !!(a && b);
+    const only = $("onlyChanged").checked;
+    $("onlyLabel").textContent = compare ? "Only settings that differ" : "Only settings changed from the defaults";
+    $("thead").innerHTML = compare
+      ? '<tr><th scope="col">Setting</th><th scope="col">A</th><th scope="col">B</th></tr>'
+      : '<tr><th scope="col">Setting</th><th scope="col">Value</th><th scope="col">Default</th></tr>';
+    const query = $("q").value.trim();
+    $("qclear").hidden = !query;
+    //a search looks at everything: the "only changed" filter waits
+    $("onlyChanged").closest("label").hidden = !!query;
+    if (query) {
+      const r = searchBody(query, a, b, compare);
+      $("tbody").innerHTML = r.body || `<tr><td colspan="3"><p class="empty">Nothing matches “${esc(query)}”. Try fewer or other words: “cursor”, “size”, “combat”, “icons”.</p></td></tr>`;
+      $("summary").textContent = `${r.n} setting${r.n === 1 ? "" : "s"} match “${query}”, from every tab, best first.`;
+      const tabs = [["all", "All tabs"]].concat(S.pages.map((p) => [p.id, p.name]));
+      $("tabs").innerHTML = tabs.map(([id, name]) =>
+        `<button type="button" role="tab" data-page="${esc(id)}" aria-selected="false">${esc(name)}</button>`).join("");
+      for (const el of document.querySelectorAll("input[data-mixed]")) el.indeterminate = true;
+      return;
+    }
+    let html = "", shown = 0, total = 0;
+    const badges = {};
+    for (const p of S.pages) {
+      const inTab = page === p.id;
+      // the tab's badge: what is changed (or differs) in the game's own layout of it
+      badges[p.id] = pageBody(p, true, a, b, compare, true).changed;
+      if (page !== "all" && !inTab) continue;
+      const r = pageBody(p, inTab, a, b, compare, only);
+      total += r.changed;
+      if (!r.n) continue;
+      shown += r.n;
+      if (page === "all") {
+        html += foldRow("page", p.id, p.name, r.n, "rowgroup");
+        if (!folded.has(p.id)) html += r.body;
+      } else html += r.body;
+    }
+    // the vanilla look's own changes
+    for (const [slot, name] of [[a, "A"], [b, "B"]]) {
+      if (slot && slot.vanilla && page === "all") {
+        let body = "";
+        for (const k of Object.keys(slot.vanilla)) {
+          const o = S.options[k]; if (!o) continue;
+          body += `<tr><td>${esc(o.label || k)}<span class="info">Changed on top of the Vanilla look (${name})</span></td><td class="val chg"><span class="v">${esc(fmt(o, slot.vanilla[k]))}</span></td><td class="val"></td></tr>`;
+        }
+        if (body) html += `<tr class="page"><th colspan="3" scope="rowgroup">Vanilla look extras · ${name}</th></tr>` + body;
+      }
+    }
+    const where = page === "all" ? "" : " on this tab";
+    $("tbody").innerHTML = html || `<tr><td colspan="3"><p class="empty">${compare ? "A and B are the same" + where + "." : "Everything" + (where || " here") + " is at its default."}${only ? " Untick the box above to see every setting." : ""}</p></td></tr>`;
+    const tabName = page === "all" ? "" : ` on ${S.pages.find((p) => p.id === page).name}`;
+    $("summary").textContent = compare
+      ? `${total} row${total === 1 ? "" : "s"} differ between A and B${tabName}.`
+      : (a ? `${a.source}. ${total} row${total === 1 ? "" : "s"} changed from the defaults${tabName}.` : "");
+    // the tabs, in the game's order, after All
+    const tabs = [["all", "All tabs", null]].concat(S.pages.map((p) => [p.id, p.name, badges[p.id]]));
+    $("tabs").innerHTML = tabs.map(([id, name, n]) =>
+      `<button type="button" role="tab" data-page="${esc(id)}" aria-selected="${id === page}">${esc(name)}${n ? `<span class="badge">${n}</span>` : ""}</button>`).join("");
+    // mixed both-maps switches show half-ticked
+    for (const el of document.querySelectorAll("input[data-mixed]")) el.indeterminate = true;
+  }
+
+  // a setting's control: the page edits slot A's settings in place. A
+  // both-maps row edits the corner map's and the widget's together.
+  function control(pageId, k) {
+    const ob = S.options[k];
+    const o = ob.both ? S.options[ob.both[0]] : ob;
+    let v, mixed = false;
+    if (ob.both) {
+      const cv = value(slots.A, ob.both[0]), wv = value(slots.A, ob.both[1]);
+      mixed = !C.same(cv, wv); v = cv;
+    } else v = value(slots.A, k);
+    const id = `v-${pageId}-${k}`.replace(/[^\w-]/g, "_");
+    const attrs = `id="${id}" data-k="${esc(k)}" aria-label="${esc(ob.label || k)}"`;
+    if (o.kind === "bool") {
+      return `<label class="check"><input type="checkbox" ${attrs} ${!mixed && v ? "checked" : ""}${mixed ? " data-mixed" : ""}><span>${mixed ? "Mixed" : v ? "On" : "Off"}</span></label>`;
+    }
+    if (o.kind === "choice") {
+      const opts = (o.choices || []).map((c, i) => {
+        const val = o.values ? o.values[i] : i + 1;
+        return `<option value="${val}"${!mixed && val === v ? " selected" : ""}>${esc(c)}</option>`;
+      }).join("");
+      return `<select ${attrs}>${mixed ? '<option value="" selected disabled>(mixed)</option>' : ""}${opts}</select>`;
+    }
+    if (o.kind === "number") {
+      return `<input type="number" ${attrs} min="${o.min}" max="${o.max}" step="${o.step || 1}" value="${mixed || C.isNone(v) ? "" : v}"${mixed ? ' placeholder="mixed"' : ""}>`;
+    }
+    // a key or button number; empty = none
+    return `<input type="number" ${attrs} min="0" step="1" placeholder="None" value="${C.isNone(v) ? "" : v}">`;
+  }
+  function edited(el) {
+    const k = el.dataset.k, ob = S.options[k], a = slots.A;
+    if (!a || !ob) return;
+    const keys = ob.both ? ob.both : [k];
+    const o = S.options[keys[0]];
+    let v;
+    if (o.kind === "bool") v = el.checked;
+    else if (o.kind === "choice") { if (el.value === "") return; v = Number(el.value); }
+    else if (o.kind === "number") {
+      const n = Number(el.value);
+      if (el.value === "" || !isFinite(n)) v = o.default;
+      else {
+        const step = o.step || 1;
+        v = Math.min(o.max, Math.max(o.min, Math.round((n - o.min) / step) * step + o.min));
+        v = Math.round(v * 1000) / 1000;
+      }
+    } else v = el.value === "" ? null : Math.max(0, Math.floor(Number(el.value)));
+    for (const key of keys) {
+      const ko = S.options[key];
+      if (C.same(v, ko.default)) delete a.values[key]; else a.values[key] = v;
+    }
+    a.code = C.encode(S, a.values, a.vanilla) || "1";
+    a.source = "Edited here";
+    $("codeOutA").textContent = C.spaced(a.code);
+    $("codeA").value = C.spaced(a.code);
+    $("tagA").textContent = a.source;
+    $("saveBoxA").hidden = true;
+    const n = Object.keys(a.values).length;
+    setStatus("A", n === 0 ? "All settings at their defaults." : `${n} setting${n === 1 ? "" : "s"} changed from the defaults.`, "ok");
+    const focus = el.id;
+    render();
+    updateHash();
+    const back = $(focus);
+    if (back) back.focus();
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])); }
+
+  // ---- links ----------------------------------------------------------------
+  function updateHash() {
+    const a = slots.A, b = slots.B;
+    if (!a || a.source === "Example") return;
+    const h = a && b ? a.code + "~" + b.code : a.code;
+    try { history.replaceState(null, "", "#" + h); } catch (e) { /* the viewer may refuse */ }
+  }
+  function fromLink() {
+    let raw = "";
+    const q = new URLSearchParams(location.search);
+    if (q.get("code")) raw = q.get("code") + (q.get("compare") ? "~" + q.get("compare") : "");
+    else if (location.hash.length > 1) raw = decodeURIComponent(location.hash.slice(1));
+    return raw.split("~").map((s) => s.trim()).filter(Boolean);
+  }
+
+  // ---- start ----------------------------------------------------------------
+  wire("A");
+  $("addB").addEventListener("click", () => {
+    wire("B"); $("slotB").hidden = false; $("addB").hidden = true; $("codeB").focus();
+  });
+  $("tbody").addEventListener("click", (e) => {
+    const f = e.target.closest("button[data-fold]");
+    if (f) toggleFold(f.dataset.fold);
+  });
+  $("tabs").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-page]");
+    if (btn) { page = btn.dataset.page; $("q").value = ""; render(); }
+  });
+  $("onlyChanged").addEventListener("change", render);
+  // the search: as you type, / to start, Esc to clear; picking a tab ends it
+  let searchTimer = 0;
+  $("q").addEventListener("input", () => { clearTimeout(searchTimer); searchTimer = setTimeout(render, 80); });
+  $("q").addEventListener("keydown", (e) => { if (e.key === "Escape") { $("q").value = ""; render(); } });
+  $("qclear").addEventListener("click", () => { $("q").value = ""; render(); $("q").focus(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && $("q").value && document.activeElement !== $("q")) { $("q").value = ""; render(); return; }
+    if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)) { e.preventDefault(); $("q").focus(); }
+  });
+  $("tbody").addEventListener("change", (e) => { if (e.target.dataset && e.target.dataset.k) edited(e.target); });
+
+  const linked = fromLink();
+  if (linked.length) {
+    $("codeA").value = C.spaced(linked[0].toUpperCase());
+    readCode("A", linked[0], false);
+    if (linked[1]) {
+      wire("B"); $("slotB").hidden = false; $("addB").hidden = true;
+      $("codeB").value = C.spaced(linked[1].toUpperCase());
+      readCode("B", linked[1], false);
+    }
+  } else {
+    // an example to start from, until a code or save is given
+    const example = { CornerMapAnchor: 4, CornerMapDistances: true, WidgetMapDistances: true, PkCoinGold: false, MinimapScale: 14, CornerMapMachineIcons: true };
+    for (const k of Object.keys(example)) if (!S.options[k]) delete example[k];
+    load("A", { values: example, vanilla: null }, "Example");
+    $("codeA").value = C.spaced(slots.A.code);
+    setStatus("A", "An example setup. Paste your own code, or open your save file.");
+  }
+})();
+</script>
