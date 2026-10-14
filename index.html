@@ -45,13 +45,15 @@ body {
   padding: 6px 10px 8px;
 }
 /* doodles in a page's corners, as on the menu's pages */
-.sheet::after, .slot::after { content: ""; position: absolute; pointer-events: none; background: no-repeat center / contain; }
+/* drawn behind the page (z-index -1 in the page's own stack), so a doodle only peeks out past the edge, never over text */
+.sheet, .slot { isolation: isolate; }
+.sheet::after, .slot::after { content: ""; position: absolute; z-index: -1; pointer-events: none; background: no-repeat center / contain; }
 header.sheet::after { width: 48px; height: 58px; right: -6px; top: -10px; background-image: url("img/d-skull.png"); display: none; }
-.slot[data-slot="A"]::after { width: 34px; height: 40px; right: -14px; top: -18px; background-image: url("img/d-bunny.png"); }
-.slot[data-slot="B"]::after { width: 32px; height: 50px; right: -10px; bottom: -14px; background-image: url("img/d-knife.png"); }
-.where::after { width: 22px; height: 26px; right: -8px; bottom: -12px; background-image: url("img/d-ask.png"); }
-.board-sheet::after { width: 94px; height: 80px; left: -14px; bottom: -18px; background-image: url("img/d-splat.png"); }
-.board-sheet::before { content: ""; position: absolute; pointer-events: none; width: 42px; height: 50px; right: -14px; top: 190px;
+.slot[data-slot="A"]::after { width: 34px; height: 40px; right: -26px; top: -30px; background-image: url("img/d-bunny.png"); }
+.slot[data-slot="B"]::after { width: 32px; height: 50px; right: -22px; bottom: -30px; background-image: url("img/d-knife.png"); }
+.where::after { width: 22px; height: 26px; right: -20px; bottom: -24px; background-image: url("img/d-ask.png"); }
+.board-sheet::after { width: 94px; height: 80px; left: -86px; bottom: -34px; background-image: url("img/d-splat.png"); }
+.board-sheet::before { content: ""; position: absolute; z-index: -1; pointer-events: none; width: 42px; height: 50px; right: -36px; top: 190px;
   background: url("img/d-poop.png") no-repeat center / contain; }
 
 header { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px; align-items: center; }
@@ -168,10 +170,13 @@ td.val.a { color: var(--soul); }
 td.val.b { color: var(--red); }
 td .info { display: block; color: var(--pencil); font-size: 14.5px; line-height: 1.35; }
 .empty { padding: 24px; color: var(--pencil); margin: 0; font-size: 18px; }
-footer { font-size: 14px; color: var(--pencil); text-align: center; }
+/* a plain backing, so the backdrop's doodles never sit behind the text */
+footer { font-size: 14px; color: var(--pencil); text-align: center; background: var(--backdrop); padding: 6px 10px; border-radius: 8px; }
 @media (max-width: 640px) {
   header { grid-template-columns: 1fr; }
   .map { display: none; }
+  /* no margin to put them in: the side doodles would land on text */
+  .board-sheet::after, .board-sheet::before { display: none; }
 }
 @media (max-width: 480px) {
   .tabs button { font-size: 16px; padding: 5px 6px 5px 20px; }
