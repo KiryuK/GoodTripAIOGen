@@ -216,7 +216,7 @@ footer { font-size: 14px; color: var(--pencil); text-align: center; background: 
         <p class="hint" id="qhint">Searches every tab: names, descriptions, choices. Press / to start typing, Esc to clear.</p>
       </div>
       <div class="tabs" id="tabs" role="tablist" aria-label="Tabs"></div>
-      <label class="toggle"><input type="checkbox" id="onlyChanged" checked> <span id="onlyLabel">Only settings changed from the defaults</span></label>
+      <label class="toggle"><input type="checkbox" id="onlyChanged"> <span id="onlyLabel">Only settings changed from the defaults</span></label>
     </div>
     <p class="summary" id="summary"></p>
     <div class="board"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
@@ -418,7 +418,7 @@ footer { font-size: 14px; color: var(--pencil); text-align: center; background: 
       load("A", { values: {}, vanilla: null }, "Defaults");
       $("codeA").value = "";
       $("onlyChanged").checked = false;
-      page = S.pages[0].id;
+      page = "all";
       render();
       setStatus("A", "Every setting at its default. Change any of them below; the code and save file follow.", "ok");
     });
