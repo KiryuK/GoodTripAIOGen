@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GoodTrip Settings Codes</title>
 <meta name="description" content="Read, share and compare GoodTrip AIO settings codes and save files.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +34,7 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { background: var(--backdrop); }
+html { background: var(--backdrop); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
   color: var(--ink); font: 400 17px/1.5 var(--font-body);
   background: url("img/backdrop.png") 0 0 / 720px 720px repeat var(--backdrop);
@@ -103,10 +107,10 @@ button.primary { border-image-source: url("img/note-gold.png"); }
 .status { font-size: 16px; min-height: 1.5em; margin: 0; color: var(--pencil); }
 .status.err { color: var(--red); }
 .status.ok { color: var(--ok); }
-.code-out { font: 700 24px/1.3 var(--font-code); letter-spacing: 0.1em; word-break: break-all; margin: 0; }
+.code-out { font: 700 24px/1.3 var(--font-code); letter-spacing: 0.1em; overflow-wrap: anywhere; margin: 0; }
 .code-out, td.val.chg .v, td.val.chg .check { background: var(--gold); box-shadow: 0 0 0 3px var(--gold); border-radius: 1px; }
 .hint { font-size: 15px; color: var(--pencil); margin: 0; }
-.hint code, .where code { font: 700 15px var(--font-code); word-break: break-all; color: var(--ink); }
+.hint code, .where code { font: 700 15px var(--font-code); overflow-wrap: anywhere; color: var(--ink); }
 .savebox { display: grid; gap: 6px; }
 .savebox textarea { height: 96px; font: 13px/1.4 var(--font-code); padding: 6px 8px; resize: vertical; }
 
